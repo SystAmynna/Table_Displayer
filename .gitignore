@@ -1,0 +1,19 @@
+# Ignore all files
+*
+
+# Allow specific directories and files
+!gradle/wrapper/
+!gradle/wrapper/**
+
+!src/main/java/
+!src/main/java/**
+
+!src/test/java/
+!src/test/java/**
+
+!.gitignore
+!build.gradle
+!gradlew
+!gradlew.bat
+!settings.gradle
+!README.md
