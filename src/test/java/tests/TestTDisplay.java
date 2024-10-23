@@ -28,8 +28,21 @@ public class TestTDisplay {
         display.CONFIG.setDisplayValues(false);
         display.CONFIG.setDefaultColor(Color.BLUE);
         display.CONFIG.setDefaultTextColor(Color.YELLOW);
-        display.CONFIG.addColor(6, Color.GREEN);
-        display.CONFIG.addTextColor(6, Color.RED);
+        display.CONFIG.addColor(2, Color.GREEN);
+        display.CONFIG.addColor(5, 10,10,10);
+        display.CONFIG.removeColor(5);
+        display.CONFIG.addTextColor(2, Color.RED);
+        display.CONFIG.addTextColor(7, 20,20,20);
+        display.CONFIG.removeTextColor(7);
+        display.CONFIG.setDefaultColor(20,20,20);
+        display.CONFIG.setDefaultTextColor(10,10,10);
+
+        System.out.println(display.CONFIG.getCaseSize());
+        System.out.println(display.CONFIG.isDisplayValues());
+        System.out.println(display.CONFIG.getColor(1));
+        System.out.println(display.CONFIG.getTextColor(2));
+        System.out.println(display.CONFIG.getDefaultColor());
+        System.out.println(display.CONFIG.getDefaultTextColor());
 
 
 
