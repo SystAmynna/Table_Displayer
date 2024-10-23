@@ -207,7 +207,7 @@ public class ConfigManager {
      * Obtenir l'affichage des valeurs
      * @return affichage des valeurs
      */
-    public boolean getDisplayValues() {
+    public boolean isDisplayValues() {
         return displayValues;
     }
 
