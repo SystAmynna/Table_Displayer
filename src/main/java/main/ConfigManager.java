@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -10,6 +11,8 @@ public class ConfigManager {
 
     // ATTRIBUTS
 
+    private final TDisplay DISPLAY;
+
     /**
      * Taille d'une case (en pixels)
      */
@@ -18,7 +21,7 @@ public class ConfigManager {
     /**
      * Afficher les valeurs
      */
-    protected boolean displayValues = true;
+    protected boolean displayValues = false;
 
     /**
      * Couleur de chaque valeur
@@ -43,7 +46,9 @@ public class ConfigManager {
     /**
      * Constructeur
      */
-    public ConfigManager() {
+    protected ConfigManager(TDisplay display) {
+        DISPLAY = display;
+
         colors.put(0, Color.WHITE);
         colors.put(1, Color.BLACK);
         colors.put(-1, Color.RED);
@@ -53,6 +58,29 @@ public class ConfigManager {
         textColors.put(-1, Color.WHITE);
     }
 
+    /**
+     * Verifier si le tableau contient une valeur non instanciée dans la HashMap précisée
+     * @param list HashMap
+     */
+    private boolean checkTable(HashMap<Integer, Color> list) {
+        // lister les valeurs du tableau
+        final ArrayList<Integer> values = new ArrayList<>();
+        for (int[] ints : DISPLAY.getTable()) {
+            for (int anInt : ints) {
+                if (!values.contains(anInt)) {
+                    values.add(anInt);
+                }
+            }
+        }
+        for (int value : values) {
+            if (list.containsKey(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     // SETTERS
 
     /**
@@ -61,6 +89,7 @@ public class ConfigManager {
      */
     public void setCaseSize(int caseSize) {
         this.caseSize = caseSize;
+        DISPLAY.updateTable();
     }
 
     /**
@@ -69,6 +98,7 @@ public class ConfigManager {
      */
     public void setDisplayValues(boolean displayValues) {
         this.displayValues = displayValues;
+        DISPLAY.updateTable();
     }
 
     /**
@@ -76,8 +106,9 @@ public class ConfigManager {
      * @param value
      * @param color
      */
-    public void setColor(int value, Color color) {
+    public void addColor(int value, Color color) {
         colors.put(value, color);
+        if (DISPLAY.contains(value)) DISPLAY.updateTable();
     }
     /**
      * Définir la couleur de texte d'une valeur
@@ -86,8 +117,8 @@ public class ConfigManager {
      * @param g Vert
      * @param b Bleu
      */
-    public void setColor(int value, int r, int g, int b) {
-        textColors.put(value, new Color(r, g, b));
+    public void addColor(int value, int r, int g, int b) {
+        addColor(value, new Color(r, g, b));
     }
 
     /**
@@ -95,8 +126,9 @@ public class ConfigManager {
      * @param value Valeur
      * @param color Couleur
      */
-    public void setTextColor(int value, Color color) {
+    public void addTextColor(int value, Color color) {
         textColors.put(value, color);
+        if (displayValues && DISPLAY.contains(value)) DISPLAY.updateTable();
     }
     /**
      * Définir la couleur de texte d'une valeur
@@ -105,8 +137,8 @@ public class ConfigManager {
      * @param g Vert
      * @param b Bleu
      */
-    public void setTextColor(int value, int r, int g, int b) {
-        textColors.put(value, new Color(r, g, b));
+    public void addTextColor(int value, int r, int g, int b) {
+        addTextColor(value, new Color(r, g, b));
     }
 
     /**
@@ -115,6 +147,7 @@ public class ConfigManager {
      */
     public void setDefaultColor(Color color) {
         this.defaultColor = color;
+        if (checkTable(colors)) DISPLAY.updateTable();
     }
     /**
      * Définir la couleur par défaut
@@ -123,7 +156,7 @@ public class ConfigManager {
      * @param b Bleu
      */
     public void setDefaultColor(int r, int g, int b) {
-        this.defaultColor = new Color(r, g, b);
+        setDefaultColor(new Color(r, g, b));
     }
 
     /**
@@ -132,6 +165,7 @@ public class ConfigManager {
      */
     public void setDefaultTextColor(Color color) {
         this.defaultTextColor = color;
+        if (displayValues && checkTable(textColors)) DISPLAY.updateTable();
     }
     /**
      * Définir la couleur de texte par défaut
@@ -140,7 +174,7 @@ public class ConfigManager {
      * @param b Bleu
      */
     public void setDefaultTextColor(int r, int g, int b) {
-        this.defaultTextColor = new Color(r, g, b);
+        setDefaultTextColor(new Color(r, g, b));
     }
 
     // GETTERS

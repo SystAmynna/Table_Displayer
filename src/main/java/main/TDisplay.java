@@ -14,7 +14,7 @@ public class TDisplay extends JPanel {
     /**
      * Gestionnaire des valeurs de configuration
      */
-    public final ConfigManager CONFIG = new ConfigManager();
+    public final ConfigManager CONFIG;
 
     /**
      * Fenêtre
@@ -37,6 +37,7 @@ public class TDisplay extends JPanel {
      * Constructeur par défaut
      */
     public TDisplay() {
+        CONFIG = new ConfigManager(this); // Initialiser le gestionnaire de configuration
         this.frame = new JFrame(); // Créer une fenêtre
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fermer l'application à la fermeture de la fenêtre
         this.frame.setContentPane(this); // Utiliser ce JPanel comme contenu de la fenêtre
@@ -81,6 +82,13 @@ public class TDisplay extends JPanel {
     }
 
     /**
+     * Met à jour le tableau
+     */
+    public void updateTable() {
+        updateTable(this.table);
+    }
+
+    /**
      * Dessine le tableau
      * @param g Graphics
      */
@@ -109,6 +117,20 @@ public class TDisplay extends JPanel {
                 }
             }
         }
+    }
+
+    /**
+     * Verifie si le tableau contient une valeur
+     */
+    public boolean contains(int value) {
+        for (int[] ints : this.table) {
+            for (int anInt : ints) {
+                if (anInt == value) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // COMMANDES FENÊTRE
