@@ -103,8 +103,8 @@ public class ConfigManager {
 
     /**
      * Définir la couleur d'une valeur
-     * @param value
-     * @param color
+     * @param value Valeur
+     * @param color Couleur
      */
     public void addColor(int value, Color color) {
         colors.put(value, color);
@@ -119,6 +119,14 @@ public class ConfigManager {
      */
     public void addColor(int value, int r, int g, int b) {
         addColor(value, new Color(r, g, b));
+    }
+    /**
+     * Supprimer une couleur
+     * @param value Valeur
+     */
+    public void removeColor(int value) {
+        colors.remove(value);
+        if (DISPLAY.contains(value)) DISPLAY.updateTable();
     }
 
     /**
@@ -139,6 +147,14 @@ public class ConfigManager {
      */
     public void addTextColor(int value, int r, int g, int b) {
         addTextColor(value, new Color(r, g, b));
+    }
+    /**
+     * Supprimer une couleur de texte
+     * @param value Valeur
+     */
+    public void removeTextColor(int value) {
+        textColors.remove(value);
+        if (displayValues && DISPLAY.contains(value)) DISPLAY.updateTable();
     }
 
     /**

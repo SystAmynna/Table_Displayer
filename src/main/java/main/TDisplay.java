@@ -3,6 +3,7 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Afficheur de tableau
@@ -24,7 +25,7 @@ public class TDisplay extends JPanel {
     /**
      * Taille de la fenêtre
      */
-    private Dimension size;
+    private final Dimension SIZE;
 
     /**
      * Tableau
@@ -45,8 +46,8 @@ public class TDisplay extends JPanel {
         this.frame.setLayout(new BorderLayout()); // Utiliser un layout manager
 
         // Adapter la taille initiale
-        size = new Dimension(400, 400); // Taille par défaut
-        this.setPreferredSize(size); // Taille préférée
+        SIZE = new Dimension(400, 400); // Taille par défaut
+        this.setPreferredSize(SIZE); // Taille préférée
         this.frame.pack(); // Redimensionner la fenêtre pour s'adapter au contenu
         this.frame.setLocationRelativeTo(null); // Centrer la fenêtre
     }
@@ -69,11 +70,11 @@ public class TDisplay extends JPanel {
         this.table = table; // Mettre à jour le tableau
 
         // Redimensionner le panel en fonction du tableau et de la taille des cases
-        Dimension size = new Dimension(
+        SIZE.setSize(
                 table.length * CONFIG.caseSize,
                 table[0].length * CONFIG.caseSize
         );
-        this.setPreferredSize(size);  // Mettre à jour la taille préférée du JPanel
+        this.setPreferredSize(SIZE);  // Mettre à jour la taille préférée du JPanel
         this.revalidate();  // Demander un recalcul du layout
         this.frame.pack();  // Redimensionner la fenêtre pour s'adapter au contenu
         this.frame.setLocationRelativeTo(null);  // Centrer la fenêtre
@@ -230,9 +231,10 @@ public class TDisplay extends JPanel {
      * @param max Valeur maximale
      */
     public void randomize(int min, int max) {
+        final Random random = new Random();
         for (int x = 0; x < this.table.length; x++) {
             for (int y = 0; y < this.table[x].length; y++) {
-                this.table[x][y] = (int) (Math.random() * (max - min + 1) + min);
+                this.table[x][y] = random.nextInt(max - min + 1) + min;
             }
         }
         repaint();
@@ -268,7 +270,7 @@ public class TDisplay extends JPanel {
      * Retourne la taille du tableau
      */
     public Dimension getSize() {
-        return this.size;
+        return this.SIZE;
     }
 
 }
