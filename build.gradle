@@ -1,3 +1,5 @@
+import javax.swing.JRootPane
+
 plugins {
     id 'java'
 }
@@ -20,8 +22,9 @@ test {
 
 jar {
     manifest {
+        archiveFileName = 'TableDisplayer.jar'
         attributes(
-            'Implementation-Title': 'Your Project Title',
+            'Implementation-Title': rootProject.name,
             'Implementation-Version': version
         )
     }
